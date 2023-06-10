@@ -21,13 +21,18 @@ function Header() {
   const dispatch = useAppDispatch();
   const total = cart.reduce((a, b) => Number(a) + Number(b.price), 0);
   return (
-    <AppBar position="relative" elevation={0} sx={{ height: 50 }}>
+    <AppBar position="relative" elevation={0} sx={{ py: 1 }}>
       <Container
         maxWidth="xl"
         sx={{ height: "100%", display: "flex", alignItems: "center" }}
       >
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={2}>
+        <Grid
+          container
+          spacing={2}
+          direction={{ xs: "column", sm: "row" }}
+          alignItems={{ xs: "center", sm: "flex-start" }}
+        >
+          <Grid item xs={4} sm={4} md={3} xl={2}>
             <Typography
               component={Link}
               to="/"
@@ -41,9 +46,9 @@ function Header() {
               Eteration
             </Typography>
           </Grid>
-          <Grid item xs={12} md={10}>
+          <Grid item xs={8} sm={8} md={9} xl={10}>
             <Stack
-              direction="row"
+              direction={{ xs: "column-reverse", sm: "row" }}
               spacing={2}
               justifyContent="space-between"
               alignItems="center"

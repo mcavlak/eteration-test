@@ -1,5 +1,14 @@
-import { Alert, AlertTitle, Grid, Pagination, Stack } from "@mui/material";
-import React, { useEffect } from "react";
+import {
+  Alert,
+  AlertTitle,
+  Button,
+  Grid,
+  Pagination,
+  Stack,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { fetchProducts } from "../redux/slices/products";
 import { useAppDispatch, useAppSelector } from "../redux/store";
 import { usePagination } from "../utils/Pagination";
@@ -16,6 +25,12 @@ function Products() {
 
   const filter = useAppSelector((state) => {
     return state.filter;
+  });
+
+  const theme = useTheme();
+  const [responsive, setResponsive] = useState({
+    show: true,
+    downSm: false,
   });
 
   const filterProducts = () => {
@@ -55,17 +70,51 @@ function Products() {
     dispatch(fetchProducts());
   }, []);
 
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const handleResize = (e) => {
+    if (e.target.innerWidth < theme.breakpoints.values.sm) {
+      setResponsive({
+        show: false,
+        downSm: true,
+      });
+    } else {
+      setResponsive({
+        show: true,
+        downSm: false,
+      });
+    }
+  };
+
   return (
     <Grid container spacing={4}>
-      <Grid item xs={2}>
-        <FilterSidebar products={products} filterData={filter} />
+      <Grid item xs={12} sm={4} md={3} xl={2}>
+        {responsive.show && (
+          <FilterSidebar products={products} filterData={filter} />
+        )}
+        {responsive.downSm && (
+          <Button
+            onClick={() =>
+              setResponsive((prev) => ({ ...prev, show: !prev.show }))
+            }
+            variant="outlined"
+            fullWidth
+          >
+            {responsive.show ? "Close Filter" : "Filter"}
+          </Button>
+        )}
       </Grid>
-      <Grid component="main" item xs={8}>
+      <Grid component="main" item xs={12} sm={4} md={6} xl={8}>
         <Stack spacing={4}>
           <Grid container spacing={4}>
             {paginationData.length > 0 ? (
               paginationData.map((v: Product, i) => (
-                <Grid key={i} item xs={12} md={3}>
+                <Grid key={i} item xs={12} md={6} lg={4} xl={3}>
                   <ProductCard {...v} />
                 </Grid>
               ))
@@ -90,7 +139,7 @@ function Products() {
           )}
         </Stack>
       </Grid>
-      <Grid item xs={2}>
+      <Grid item xs={12} sm={4} md={3} xl={2}>
         <CartSidebar />
       </Grid>
     </Grid>

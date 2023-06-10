@@ -23,7 +23,7 @@ function ProductDetail() {
   return (
     product && (
       <Grid container spacing={4}>
-        <Grid component="main" item xs={12} md={10}>
+        <Grid component="main" item xs={12} sm={7} md={8} lg={9} xl={10}>
           <Card sx={{ p: 2 }}>
             <Grid container spacing={4}>
               <Grid item xs={12} md={6}>
@@ -60,7 +60,7 @@ function ProductDetail() {
             </Grid>
           </Card>
         </Grid>
-        <Grid item xs={12} md={2}>
+        <Grid item xs={12} sm={5} md={4} lg={3} xl={2}>
           <CartSidebar />
         </Grid>
       </Grid>
