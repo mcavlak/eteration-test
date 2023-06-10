@@ -10,7 +10,9 @@ function MainTemplate({ children }: Props) {
   return (
     <>
       <Header />
-      <Container sx={{ mt: 2 }}>{children}</Container>
+      <Container maxWidth="xl" sx={{ mt: 4 }}>
+        {children}
+      </Container>
     </>
   );
 }
