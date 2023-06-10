@@ -11,8 +11,15 @@ import {
 import React from "react";
 import { LocalMallOutlined, PersonOutlineOutlined } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../redux/store";
+import { changeSearch } from "../../../redux/slices/filter";
 
 function Header() {
+  const cart = useAppSelector((state) => {
+    return state.cart.items;
+  });
+  const dispatch = useAppDispatch();
+  const total = cart.reduce((a, b) => Number(a) + Number(b.price), 0);
   return (
     <AppBar position="relative" elevation={0} sx={{ height: 50 }}>
       <Container
@@ -44,6 +51,7 @@ function Header() {
               <TextField
                 variant="outlined"
                 placeholder="Search"
+                onChange={(e) => dispatch(changeSearch(e.target.value))}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -59,7 +67,12 @@ function Header() {
               <Stack direction="row" spacing={2}>
                 <Stack direction="row" spacing={1}>
                   <LocalMallOutlined />
-                  <Typography>117.000₺</Typography>
+                  <Typography>
+                    {new Intl.NumberFormat("tr-TR", {
+                      style: "currency",
+                      currency: "TRY",
+                    }).format(total || 0)}
+                  </Typography>
                 </Stack>
                 <Stack direction="row" spacing={1}>
                   <PersonOutlineOutlined />

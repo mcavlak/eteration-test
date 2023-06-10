@@ -23,11 +23,15 @@ export const fetchProducts = createAsyncThunk(
 
 export const fetchProduct = createAsyncThunk(
   "products/fetchProduct",
-  async () => {
-    const response = await fetch(
-      "https://5fc9346b2af77700165ae514.mockapi.io/products/"
-    ).then((res) => res.json());
-    return response;
+  async (productId: string) => {
+    if (productId) {
+      const response = await fetch(
+        "https://5fc9346b2af77700165ae514.mockapi.io/products/" + productId
+      ).then((res) => res.json());
+      return response;
+    } else {
+      return null;
+    }
   }
 );
 

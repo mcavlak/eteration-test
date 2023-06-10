@@ -10,8 +10,11 @@ import {
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useAppDispatch } from "../../../redux/store";
+import { addToCart } from "../../../redux/slices/cart";
 
 function ProductCard(props: Product) {
+  const distpatch = useAppDispatch();
   return (
     <Card
       sx={{
@@ -44,10 +47,15 @@ function ProductCard(props: Product) {
               {props.name}
             </Typography>
           </Link>
-        </Tooltip>{" "}
+        </Tooltip>
       </CardContent>
       <CardActions>
-        <Button variant="contained" fullWidth size="small">
+        <Button
+          onClick={() => distpatch(addToCart(props))}
+          variant="contained"
+          fullWidth
+          size="small"
+        >
           Add to Cart
         </Button>
       </CardActions>
