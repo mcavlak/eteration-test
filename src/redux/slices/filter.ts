@@ -4,12 +4,14 @@ export interface FilterState {
   sort: string;
   brand: string[];
   model: string[];
+  search: string;
 }
 
 const initialState: FilterState = {
   sort: "Old to new",
   brand: [],
   model: [],
+  search: "",
 };
 
 export const filterSlice = createSlice({
@@ -39,9 +41,13 @@ export const filterSlice = createSlice({
         state.model = newList;
       }
     },
+    changeSearch: (state, action: PayloadAction<string>) => {
+      state.search = action.payload;
+    },
   },
 });
 
-export const { changeSort, changeBrand, changeModel } = filterSlice.actions;
+export const { changeSort, changeBrand, changeModel, changeSearch } =
+  filterSlice.actions;
 
 export default filterSlice.reducer;

@@ -6,15 +6,27 @@ interface CartState {
 }
 
 const initialState: CartState = {
-  items: [],
+  items: JSON.parse(localStorage.getItem("cart")) || [],
 };
 
 export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addToCart: (state, action: PayloadAction<string>) => {},
-    removeFromCart: (state, action: PayloadAction<string>) => {},
+    addToCart: (state, action: PayloadAction<Product>) => {
+      const newList = [...state.items, action.payload];
+      localStorage.setItem("cart", JSON.stringify(newList));
+      state.items = newList;
+    },
+    removeFromCart: (state, action: PayloadAction<Product>) => {
+      let newList = state.items;
+      const index = newList.findIndex((v) => v.id === action.payload.id);
+      if (index > -1) {
+        newList.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(newList));
+        state.items = newList;
+      }
+    },
   },
 });
 
