@@ -11,9 +11,11 @@ function CartSidebar() {
   const total = cart.reduce((a, b) => Number(a) + Number(b.price), 0);
   return (
     <Grid component="aside" container spacing={4}>
-      <Grid item xs={12}>
-        <Cart cart={cart} />
-      </Grid>
+      {cart.length > 0 && (
+        <Grid item xs={12}>
+          <Cart cart={cart} />
+        </Grid>
+      )}
       <Grid item xs={12}>
         <Checkout
           total={new Intl.NumberFormat("tr-TR", {
