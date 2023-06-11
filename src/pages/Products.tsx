@@ -5,7 +5,6 @@ import {
   Grid,
   Pagination,
   Stack,
-  useMediaQuery,
   useTheme,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -72,6 +71,12 @@ function Products() {
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);
+    if (window.innerWidth < theme.breakpoints.values.sm) {
+      setResponsive({
+        show: false,
+        downSm: true,
+      });
+    }
     return () => {
       window.removeEventListener("resize", handleResize);
     };
