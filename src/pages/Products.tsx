@@ -70,32 +70,13 @@ function Products() {
   }, []);
 
   useEffect(() => {
-    window.addEventListener("resize", handleResize);
     if (window.innerWidth < theme.breakpoints.values.sm) {
       setResponsive({
         show: false,
         downSm: true,
       });
     }
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
   }, []);
-
-  const handleResize = (e) => {
-    if (e.target.innerWidth < theme.breakpoints.values.sm) {
-      setResponsive({
-        show: false,
-        downSm: true,
-      });
-    } else {
-      setResponsive({
-        show: true,
-        downSm: false,
-      });
-    }
-  };
-
   return (
     <Grid container spacing={4}>
       <Grid item xs={12} sm={4} md={3} xl={2}>
